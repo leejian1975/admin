@@ -1,0 +1,1 @@
+  <i :class="'el-icon-' + name"></i>

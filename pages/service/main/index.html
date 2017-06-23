@@ -1,0 +1,71 @@
+<section class="app-cms">
+    <template v-if="!$route.meta.hidden">
+        <!-- header start  -->
+        <header class="app-cms-header">
+            <div class="menu-mini">
+                <span @click="menuClick"><i class="el-icon-menu"></i></span>
+            </div>
+            <div class="header-right">
+                <a class="logo" @click="goToIndex()">{{name}}</a>
+                <div class="user-info" v-if="user.username">
+                    <el-dropdown>
+                        <span style="color: white">
+                            {{user.username}}<i class="el-icon-caret-bottom el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
+            </div>
+        </header>
+        <!-- header end  -->
+
+        <!-- body start  -->
+        <div class="app-cms-body">
+            <el-row>
+                <el-col :xs="0" :sm="7" :md="4" :lg="4" style = "position:fixed;height:100%" :class="menuClass">
+                    <!-- menu start -->
+                    <div class="app-cms-menu-wrapper">
+                        <el-menu :default-active="activeMenu" class="app-cms-menu-bar" router>
+                            <template v-for="(route, index) in $router.options.routes[$router.options.routes.length - 2].children">
+                                <template v-if="route.children && route.meta.showOnList && getRealm(route.meta.realm)">
+                                    <el-submenu :index="route.name">
+                                        <template slot="title">
+                                            <i :class="route.iconClass"></i>
+                                            {{route.meta.name}}</template>
+                                        <el-menu-item :index="cRoute.name" v-for="(cRoute, cIndex) in route.children" :key="cIndex" :route="cRoute" v-if="cRoute.meta.showOnList && getRealm(cRoute.meta.realm)">
+                                            <i :class="cRoute.iconClass"></i>{{cRoute.meta.name}}</el-menu-item>
+                                    </el-submenu>
+                                </template>
+
+                                <template v-if="!route.children && route.name && route.meta.showOnList && getRealm(route.meta.realm)">
+                                    <el-menu-item :index="route.name" :route="route"><i :class="route.iconClass"></i>{{route.meta.name}}</el-menu-item>
+                                </template>
+                            </template>
+                        </el-menu>
+                    </div>
+                    <!-- menu end -->
+
+                </el-col>
+                <el-col :xs="24" :sm="17" :md="20" :lg="20" style="float: right;">
+                    <!-- content start -->
+                    <div class="app-cms-content-wrapper">
+                        <section class="app-cms-content">
+                            <router-view></router-view>
+                        </section>
+                    </div>
+                    <!-- content end -->
+                </el-col>
+            </el-row>
+
+        </div>
+        <!-- body end  -->
+    </template>
+    <template v-else>
+        <router-view></router-view>
+    </template>
+    <cfe-back-top :height="100" :bottom="50">
+        <div class="top">返回顶端</div>
+    </cfe-back-top>
+</section>

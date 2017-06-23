@@ -1,0 +1,45 @@
+<div id="big-form">
+
+    <app-cms-breadcrumb></app-cms-breadcrumb>
+
+    <div class="app-cms-content-inner">
+        <el-form label-position="left" label-width="100px">
+            <el-form-item label="活动名称：">
+                {{activity.name}}
+            </el-form-item>
+
+            <el-form-item label="举办单位：">
+                {{activity.organizer}}
+            </el-form-item>
+
+            <el-form-item label="活动日期：">
+                {{activity.time}}
+            </el-form-item>
+
+            <el-form-item label="活动城市：">
+                {{activity.city}}
+            </el-form-item>
+
+            <el-form-item label="活动地点：">
+                {{activity.location}}
+            </el-form-item>
+
+            <el-form-item label="联系人：">
+                {{activity.contact}}
+            </el-form-item>
+
+            <el-form-item label="联系电话：">
+                {{activity.phone}}
+            </el-form-item>
+
+            <el-form-item v-for="(item,index) in activity.agenda" :label="'议程' + (index+1)+'：'">
+                {{item.content}}
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" @click="handleEdit(activity.id)">编辑</el-button>
+                <el-button  @click="back()">返回</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+</div>

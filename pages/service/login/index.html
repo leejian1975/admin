@@ -1,0 +1,22 @@
+<div id="login-page" @keyup.enter="login">
+    <div class="login-form">
+        <div class="input-group">
+            <div class="title">后台管理系统</div>
+            <el-input
+                    :autofocus="true"
+                    placeholder="请输入用户名"
+                    v-model="username">
+            </el-input>
+        </div>
+        <div class="input-group">
+            <el-input
+                    placeholder="请输入密码"
+                    type="password"
+                    v-model="password">
+            </el-input>
+        </div>
+        <div class="input-group">
+            <el-button @click.native="login" type="primary" :loading="isBtnLoading">{{btnText}}</el-button>
+        </div>
+    </div>
+</div>

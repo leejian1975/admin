@@ -1,0 +1,60 @@
+<div id="big-form">
+
+    <app-cms-breadcrumb></app-cms-breadcrumb>
+
+    <div class="app-cms-content-inner">
+        <el-form label-position="left" :rules="rules" ref="activity" :model="activity" label-width="100px">
+            <el-form-item label="活动名称：" prop="name">
+                <el-input placeholder="请输入活动名称" v-model="activity.name"></el-input>
+            </el-form-item>
+
+            <el-form-item label="举办单位：" prop="organizer">
+                <el-input placeholder="请输入举办单位" v-model="activity.organizer"></el-input>
+            </el-form-item>
+
+            <el-form-item label="活动日期：" prop="time">
+                <app-cms-date :value="activity.time" placeholder="请输入活动日期" @on-change="handleDateChange"></app-cms-date>
+            </el-form-item>
+
+            <el-form-item label="活动城市：" prop="city">
+                <app-cms-city :cityName="activity.city" :onlyCity="true"
+                              @city-change="handleCityChange"></app-cms-city>
+            </el-form-item>
+
+            <el-form-item label="活动地点：" prop="location">
+                <el-input placeholder="请输入活动地点" v-model="activity.location"></el-input>
+            </el-form-item>
+
+            <el-form-item label="联系人：" prop="contact">
+                <el-input placeholder="请输入联系人" v-model="activity.contact"></el-input>
+            </el-form-item>
+
+            <el-form-item label="联系电话：" prop="phone">
+                <el-input placeholder="请输入联系人电话" v-model="activity.phone"></el-input>
+            </el-form-item>
+
+            <el-form-item  label="议程：" prop="agenda">
+                <el-row v-for="(item, index) in activity.agenda" class="skill-line" type="flex" align="middle" :key="item.id">
+                    <el-col :span="12">
+                        <el-input type="textarea" v-model="item.content" :rows="12" placeholder="请输入活动简介"></el-input>
+                        <br/><br/>
+                    </el-col>
+                    <el-col :span="6" :offset="1">
+                        <el-button type="primary" icon="delete" @click="deleteAgenda(index)"></el-button>
+                        <el-button type="primary" icon="plus" @click="addAgenda" v-if="index === activity.agenda.length - 1"></el-button>
+                    </el-col>
+                </el-row>
+                <el-row v-if="activity.agenda.length <= 0">
+                    <el-col :span="6" :offset="1">
+                        <el-button type="primary" icon="plus" @click="addAgenda">添加活动简介</el-button>
+                    </el-col>
+                </el-row>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" @click="handleSave(activity.id)">保存</el-button>
+                <el-button @click="cancel(activity.id)">取消</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+</div>

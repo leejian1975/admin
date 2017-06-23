@@ -1,0 +1,67 @@
+<div class="listPage">
+
+    <!-- breadcrumb start  -->
+    <app-cms-breadcrumb></app-cms-breadcrumb>
+    <!-- breadcrumb end  -->
+
+    <div class="app-cms-content-inner">
+
+        <!-- filters start -->
+        <div class="filters">
+            <div class="filter">
+                活动名称：
+                <el-input placeholder="请输入活动名称" v-model="filters.name"></el-input>
+            </div>
+            <el-button type="primary" icon="search" @click="handleSearch()">搜索</el-button>
+            <el-button type="primary" icon="plus" @click="goToAddActivity()">新增</el-button>
+            <el-button type="primary" icon="delete" @click="batchDeleteActivity()">批量删除</el-button>
+            <el-button type="primary" @click="batchImport()"><i class="el-icon-upload el-icon--left"></i>批量导入</el-button>
+        </div>
+        <!-- filters end -->
+
+        <el-table :data="activity"  v-loading="loading"
+                  element-loading-text="拼命加载中" stripe
+                  @selection-change="handleSelectionChange"
+                  @sort-change="handleSortChange"
+                  ref="table">
+            <el-table-column type="selection" :reserve-selection="reserveSelection" width="55"></el-table-column>
+            <el-table-column prop="name" min-width="300" label="活动名称" sortable="custom"></el-table-column>
+            <el-table-column prop="time" width="150" label="活动时间" sortable="custom"></el-table-column>
+            <el-table-column prop="location" width="150" label="活动地点" sortable="custom"></el-table-column>
+            <el-table-column prop="contact" width="150" label="联系人" sortable="custom"></el-table-column>
+            <el-table-column  :context="_self" width="200" inline-template label="操作">
+                <div>
+                    <el-button-group>
+                    <el-button size="small" icon="search" @click="handleFind(row.id)">查看</el-button>
+                    <el-button size="small" icon="delete" type="danger" @click="handleDelete(row)">删除</el-button>
+                    </el-button-group>
+                </div>
+            </el-table-column>
+
+        </el-table>
+
+        <div class="pagination-wrapper">
+            <el-pagination
+                    layout="prev, pager, next, total"
+                    @current-change="handleCurrentChange"
+                    :page-size="pageSize"
+                    :total="total"></el-pagination>
+        </div>
+
+        <el-dialog title="导入活动数据" v-model="dialogVisible" size="tiny">
+            <el-upload
+                    :action="upload.action"
+                    :before-upload="beforeUploadActivity"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :on-success="handleSuccess"
+                    :on-error="handleError"
+                    :file-list="activityFiles">
+                <el-button type="primary"><i class="el-icon-upload el-icon--left"></i>批量导入</el-button>
+                <div class="el-upload__tip" slot="tip">只能上传excel文件</div>
+            </el-upload>
+        </el-dialog>
+
+    </div>
+
+</div>
