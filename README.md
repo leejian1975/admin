@@ -14,19 +14,5 @@
 
 * axios: 基于 Promise 的 HTTP 请求客户端，可同时在浏览器和 node.js 中使用。
 
-
-## 文件结构
-* lib-user - webpack config files
-* lib - webpack config files
-* pages -your app
-    * api  - 访问后台方法
-    * assets  
-    * components - 自定义控件，例如城市控件
-    * service  - 业务组件，所有的业务页面存放
-    * utils  - 工具
-    * router.js - 路由
-* config.js  - 配置文件
-* index.html - 入口页面
-* index.js         
-
+      
 
